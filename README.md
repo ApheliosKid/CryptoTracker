@@ -63,3 +63,7 @@ To run this bot on your local machine, follow these steps:
 This project uses the **CoinGecko Demo API**. Please be aware that:
 * The Demo API is intended for **personal and non-commercial use only**.
 * If you plan to use this bot for commercial purposes, you must upgrade to a [CoinGecko API Paid Plan](https://www.coingecko.com/en/api/pricing).
+
+##  License
+
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
