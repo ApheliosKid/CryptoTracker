@@ -1,0 +1,14 @@
+portofoliu.db
+.env
+CryptoBot.zip
+.vscode/
+.idea/
+__pycache__/
+venv/
+.venv/
+env/
+*.db
+*.sqlite3
+*.zip
+*.py[cod]
+*$py.class
