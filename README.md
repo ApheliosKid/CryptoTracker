@@ -56,3 +56,10 @@ To run this bot on your local machine, follow these steps:
 * `!cumpara [coin_name] [amount]` - Adds a coin to your portfolio at the current market price.
 * `!vinde [coin_name] [amount]` - Sells a specific amount of coin from your portfolio.
 * `!portofoliu` - Display your total investment value, current balance, and overall P&L.
+
+---
+
+### ⚠️ Disclaimer
+This project uses the **CoinGecko Demo API**. Please be aware that:
+* The Demo API is intended for **personal and non-commercial use only**.
+* If you plan to use this bot for commercial purposes, you must upgrade to a [CoinGecko API Paid Plan](https://www.coingecko.com/en/api/pricing).
