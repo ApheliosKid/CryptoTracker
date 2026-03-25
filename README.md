@@ -18,6 +18,7 @@ Discord bot, created in Python, which allows users to track cryptocurrency price
 ## Project Preview
 
 * Command Menu Screenshot
+
 ![img.png](img.png)
 * Crypto Portofolio Screenshot
 ![img_1.png](img_1.png)
