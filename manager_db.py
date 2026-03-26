@@ -1,44 +1,48 @@
 import sqlite3
 
-def init_db():
-    conexiune = sqlite3.connect("portofoliu.db")
+class DatabaseManager:
+    def __init__(self, db_name="portofoliu.db"):
+        self.db_name = db_name
+        self.init_db()
 
-    cursor = conexiune.cursor()
+    def _get_connection(self):
+        return sqlite3.connect(self.db_name)
 
-    cursor.execute('''CREATE TABLE IF NOT EXISTS portofoliu_crypto
-                      (
-                          id
-                          INTEGER
-                          PRIMARY
-                          KEY
-                          AUTOINCREMENT,
-                          nume_moneda
-                          TEXT,
-                          pret_curent
-                          REAL,
-                          cantitate_detinuta
-                          REAL
-                      )
-                   ''')
-    conexiune.commit()
-    conexiune.close()
+    def init_db(self):
 
-def adauga_in_portofoliu(nume_moneda, pret_achizitie, cantitate):
-    conexiune = sqlite3.connect("portofoliu.db")
-    cursor = conexiune.cursor()
+        with self._get_connection() as conexiune:
 
-    comanda_sql = "INSERT INTO portofoliu_crypto(nume_moneda, pret_curent, cantitate_detinuta) VALUES (?,?,?)"
-    cursor.execute(comanda_sql, (nume_moneda.capitalize(), pret_achizitie, cantitate))
+            cursor = conexiune.cursor()
 
-    conexiune.commit()
-    conexiune.close()
+            cursor.execute('''CREATE TABLE IF NOT EXISTS portofoliu_crypto
+                              (
+                                  id
+                                  INTEGER
+                                  PRIMARY
+                                  KEY
+                                  AUTOINCREMENT,
+                                  nume_moneda
+                                  TEXT,
+                                  pret_curent
+                                  REAL,
+                                  cantitate_detinuta
+                                  REAL
+                              )
+                           ''')
+            conexiune.commit()
 
-def citeste_portofoliu():
-    conexiune = sqlite3.connect("portofoliu.db")
-    cursor = conexiune.cursor()
+    def adauga_in_portofoliu(self, nume_moneda, pret_achizitie, cantitate):
+        with self._get_connection() as conexiune:
+            cursor = conexiune.cursor()
 
-    cursor.execute("SELECT nume_moneda, pret_curent, cantitate_detinuta FROM portofoliu_crypto")
-    date_portfoliu = cursor.fetchall()
+            comanda_sql = "INSERT INTO portofoliu_crypto(nume_moneda, pret_curent, cantitate_detinuta) VALUES (?,?,?)"
+            cursor.execute(comanda_sql, (nume_moneda.capitalize(), pret_achizitie, cantitate))
 
-    conexiune.close()
-    return date_portfoliu
+            conexiune.commit()
+
+    def citeste_portofoliu(self):
+        with self._get_connection() as conexiune:
+
+            cursor = conexiune.cursor()
+            cursor.execute("SELECT nume_moneda, pret_curent, cantitate_detinuta FROM portofoliu_crypto")
+            return cursor.fetchall()

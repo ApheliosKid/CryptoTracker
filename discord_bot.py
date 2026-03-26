@@ -1,7 +1,9 @@
 import discord
 from api_manager import ia_pret_crypto
-from manager_db import adauga_in_portofoliu, citeste_portofoliu, init_db
+from manager_db import DatabaseManager
 import asyncio
+
+db = DatabaseManager()
 
 print("Starting the bot...")
 
@@ -12,7 +14,6 @@ client = discord.Client(intents=intents)
 
 @client.event
 async def on_ready():
-    init_db()
     print(f'Succesfully connected as {client.user}')
 
 @client.event
@@ -52,7 +53,7 @@ async def on_message(message):
                     pret = ia_pret_crypto(moneda)
                     if pret is not None:
                         total_plata = pret * cantitate
-                        adauga_in_portofoliu(moneda, pret, cantitate)
+                        db.adauga_in_portofoliu(moneda, pret, cantitate)
 
                         await message.channel.send(f'✅ Success! You "bought" **{cantitate} {moneda.capitalize()}** at **${pret}**.\n💰 Total invested: **${total_plata:.2f}**.')
                     else:
@@ -61,7 +62,7 @@ async def on_message(message):
                 await message.channel.send('❌ Please enter a valid amount (e.g., `!buy solana 2.5`).')
     elif message_chat == '!portfolio':
         async with message.channel.typing():
-            date_salvate = citeste_portofoliu()
+            date_salvate = db.citeste_portofoliu()
 
             if len(date_salvate) == 0:
                 await message.channel.send("🕸️ Your portfolio is empty. Use `!buy` to add some coins!")
@@ -87,9 +88,9 @@ async def on_message(message):
                     valoare_totala_curenta += valoare_curenta
 
                     if profit_pierdere >= 0:
-                        pnl_text = f"🟢 +{profit_pierdere:.2f}$"
+                        pnl_text = f"🟢 +${profit_pierdere:.2f}"
                     else:
-                        pnl_text = f"🔴 {profit_pierdere:.2f}$"
+                        pnl_text = f"🔴 ${profit_pierdere:.2f}"
 
                     embed_portofoliu.add_field(name=f"{nume.capitalize()} ({cantitate} units)",
                                                value=f"💰 Bought at: ${pret_achizitie}\n📈 Current Price: ${pret_live}\n📊 P&L: {pnl_text}",
