@@ -13,7 +13,7 @@ Discord bot, created in Python, which allows users to track cryptocurrency price
 
 * **Language:** Python 3.x
 * **Libraries:** `discord.py` (Discord API wrapper), `requests` (API handling), `sqlite3` (Database management).
-* **Architecture:** Modular code design (separation of concerns between Database, API, and Bot logic).
+* **Architecture & Paradigms:** Object-Oriented Programming (OOP) and Asynchronous Programming, built with a modular code design (separation of concerns between Database, API, and Bot logic).
 
 ## Project Preview
 
